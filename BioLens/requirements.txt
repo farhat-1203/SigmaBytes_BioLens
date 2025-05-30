@@ -1,1 +1,13 @@
-GEOparse
+streamlit
+tensorflow
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+scipy
+# Additional libraries for data handling and visualization
+plotly
+# Optional libraries for advanced features
+# Uncomment the following lines if you need them
+keras
