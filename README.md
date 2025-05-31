@@ -56,10 +56,10 @@ Identifying disease-associated genes from large-scale gene expression data can b
 
 ## 📊 Key Features
 
-- 🔬 **Differential Gene Expression Analysis** (DESeq2)
-- 📈 **UMAP Plot** for dimensionality reduction and clustering
-- 🌋 **Volcano Plot** for significant DEGs
-- 🧪 **Dispersion Estimation** for quality control
+- **Differential Gene Expression Analysis** (DESeq2)
+- **UMAP Plot** for dimensionality reduction and clustering
+- **Volcano Plot** for significant DEGs
+- **Dispersion Estimation** for quality control
 ---
 
 ## 📈 Visual Results
