@@ -96,16 +96,14 @@ cd BioLens
 ```
 
 ### 2. Create a Virtual Environment 
-```
-bash
+```bash
 # For Windows
 python -m venv env
 env\Scripts\activate
 ```
 
 ### 3. Install the Dependencies
-```
-bash
+```bash
 pip install -r requirements.txt
 ```
 
