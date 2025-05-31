@@ -1,0 +1,206 @@
+from pydantic import BaseModel
+from typing import Dict, List, Any, Optional
+import os
+import joblib
+import logging
+import tensorflow 
+from tensorflow.keras.models import load_model
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+class PredictionResult(BaseModel):
+    sample_name: str
+    predicted_class: str
+    cancer_probability: float
+    confidence_score: float
+    top_genes_expression: Dict[str, float]
+    
+class VisualizationData(BaseModel):
+    bar_chart_data: Dict[str, float]
+    line_chart_data: Dict[str, float]
+    expression_summary: Dict[str, Any]
+
+class BioLensResponse(BaseModel):
+    prediction: PredictionResult
+    visualizations: VisualizationData
+    processing_info: Dict[str, Any]
+    success: bool
+    message: str
+    
+class ModelArtifacts:
+    """Singleton class to load and cache model artifacts"""
+    _instance = None
+    _artifacts_loaded = False
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(ModelArtifacts, cls).__new__(cls)
+        return cls._instance
+    
+    def __init__(self):
+        if not self._artifacts_loaded:
+            self.load_artifacts()
+            self._artifacts_loaded = True
+    
+    def load_artifacts(self):
+        """Load all model artifacts"""
+        self.selected_genes = None
+        self.scaler = None
+        self.sklearn_model = None
+        self.keras_model = None
+        self.ensemble_weights = None
+        
+        
+        if os.path.exists('selected_genes.pkl'):
+            try:
+                self.selected_genes = joblib.load('selected_genes.pkl')
+                logger.info(f"Loaded {len(self.selected_genes)} selected genes")
+            except Exception as e:
+                logger.error(f"Failed to load selected_genes.pkl: {e}")
+        
+        
+        if os.path.exists('scaler.pkl'):
+            try:
+                self.scaler = joblib.load('scaler.pkl')
+                logger.info("Loaded scaler successfully")
+            except Exception as e:
+                logger.error(f"Failed to load scaler.pkl: {e}")
+        
+   
+        if os.path.exists('sk_model.pkl'):
+            try:
+                self.sklearn_model = joblib.load('sk_model.pkl')
+                logger.info("Loaded sklearn model successfully")
+            except Exception as e:
+                logger.error(f"Failed to load sk_model.pkl: {e}")
+        
+        
+        if os.path.exists('nn_model.h5'):
+            try:
+                from tensorflow.keras.models import load_model
+                self.keras_model = load_model('nn_model.h5')
+                logger.info("Loaded Keras model successfully")
+            except Exception as e:
+                logger.error(f"Failed to load nn_model.h5: {e}")
+        
+       
+        if os.path.exists('ensemble_weights.pkl'):
+            try:
+                self.ensemble_weights = joblib.load('ensemble_weights.pkl')
+                logger.info("Loaded ensemble weights")
+            except Exception as e:
+                logger.error(f"Failed to load ensemble weights: {e}")
+                
+                self.ensemble_weights = {'sklearn': 0.6, 'keras': 0.4}
+    
+    def validate_artifacts(self):
+        """Check if all required artifacts are loaded"""
+        missing = []
+        if self.selected_genes is None:
+            missing.append("selected_genes")
+        if self.scaler is None:
+            missing.append("scaler")
+        if self.sklearn_model is None and self.keras_model is None:
+            missing.append("at least one model (sklearn or keras)")
+        
+        return len(missing) == 0, missing
+
+class GeneExpressionProcessor:
+    """Handle gene expression data processing and prediction"""
+    
+    def __init__(self, artifacts: ModelArtifacts):
+        self.artifacts = artifacts
+    
+    def preprocess_data(self, df: pd.DataFrame) -> tuple:
+        """Preprocess uploaded TSV data"""
+        try:
+            # Log2 transformation
+            df_log2 = np.log2(df + 1)
+            
+            # Check for missing genes
+            missing_genes = [gene for gene in self.artifacts.selected_genes 
+                           if gene not in df_log2.index]
+            
+            if missing_genes:
+                raise ValueError(f"Missing {len(missing_genes)} required genes: {missing_genes[:5]}...")
+            
+            # Extract features for prediction
+            features = df_log2.loc[self.artifacts.selected_genes].T
+            data_scaled = self.artifacts.scaler.transform(features)
+            
+            return df_log2, data_scaled, None
+            
+        except Exception as e:
+            return None, None, str(e)
+    
+    def predict_with_ensemble(self, data_scaled: np.ndarray) -> tuple:
+        """Make predictions using ensemble of models"""
+        predictions = {}
+        
+        # Sklearn prediction
+        if self.artifacts.sklearn_model is not None:
+            try:
+                if hasattr(self.artifacts.sklearn_model, 'predict_proba'):
+                    prob_sklearn = self.artifacts.sklearn_model.predict_proba(data_scaled)[0, 1]
+                else:
+                    prob_sklearn = self.artifacts.sklearn_model.predict(data_scaled)[0]
+                predictions['sklearn'] = float(prob_sklearn)
+            except Exception as e:
+                logger.error(f"Sklearn prediction failed: {e}")
+        
+        # Keras prediction
+        if self.artifacts.keras_model is not None:
+            try:
+                prob_keras = float(self.artifacts.keras_model.predict(data_scaled, verbose=0).flatten()[0])
+                predictions['keras'] = prob_keras
+            except Exception as e:
+                logger.error(f"Keras prediction failed: {e}")
+        
+        if not predictions:
+            raise ValueError("No models available for prediction")
+        
+        # Ensemble prediction
+        if len(predictions) > 1 and self.artifacts.ensemble_weights:
+            ensemble_prob = sum(predictions[model] * self.artifacts.ensemble_weights.get(model, 0) 
+                             for model in predictions)
+            ensemble_prob = np.clip(ensemble_prob, 0.0, 1.0)
+        else:
+            # Use single model or average if no weights
+            ensemble_prob = np.mean(list(predictions.values()))
+        
+        return ensemble_prob, predictions
+    
+    def generate_visualizations(self, df_log2: pd.DataFrame, sample_name: str) -> Dict:
+        """Generate visualization data for frontend"""
+        try:
+            # Top 5 genes expression
+            top5_genes = self.artifacts.selected_genes[:5]
+            top5_data = df_log2.loc[top5_genes, sample_name].to_dict()
+            
+            # All selected genes for line chart
+            all_genes_data = df_log2.loc[self.artifacts.selected_genes, sample_name].to_dict()
+            
+            # Expression summary statistics
+            expression_stats = {
+                'mean_expression': float(df_log2[sample_name].mean()),
+                'median_expression': float(df_log2[sample_name].median()),
+                'std_expression': float(df_log2[sample_name].std()),
+                'min_expression': float(df_log2[sample_name].min()),
+                'max_expression': float(df_log2[sample_name].max()),
+                'total_genes': len(df_log2),
+                'selected_genes_count': len(self.artifacts.selected_genes)
+            }
+            
+            return {
+                'bar_chart_data': top5_data,
+                'line_chart_data': all_genes_data,
+                'expression_summary': expression_stats
+            }
+        except Exception as e:
+            logger.error(f"Visualization generation failed: {e}")
+            return {
+                'bar_chart_data': {},
+                'line_chart_data': {},
+                'expression_summary': {}
+            }
+
