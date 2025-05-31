@@ -86,3 +86,31 @@ Identifying disease-associated genes from large-scale gene expression data can b
 
 ---
 
+## 🔧 Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/farhat-1203/SigmaBytes_BioLens.git
+cd BioLens
+```
+
+### 2. Create a Virtual Environment 
+```
+bash
+# For Windows
+python -m venv env
+env\Scripts\activate
+```
+
+### 3. Install the Dependencies
+```
+bash
+pip install -r requirements.txt
+```
+
+### 4. Start the Streamlit application:
+```
+bash
+streamlit run app.py
+```
