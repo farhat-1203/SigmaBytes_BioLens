@@ -11,3 +11,5 @@ plotly
 # Optional libraries for advanced features
 # Uncomment the following lines if you need them
 keras
+fastapi
+pydantic

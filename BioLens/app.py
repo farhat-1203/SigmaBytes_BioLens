@@ -4,13 +4,11 @@ import numpy as np
 import joblib
 import os
 
-# Page configuration
 st.set_page_config(page_title="Gene Expression Classifier", layout="centered")
 
 st.title("🧬 Gene Expression Cancer Classifier")
 st.write("Upload your gene expression sample (TSV) to get a cancer probability prediction and visualizations.")
 
-# Load artifacts (selected_genes, scaler, and model)
 @st.cache_resource
 def load_artifacts():
     selected_genes = None
@@ -18,7 +16,7 @@ def load_artifacts():
     model = None
     model_type = None
 
-    # Load selected_genes
+
     if os.path.exists('selected_genes.pkl'):
         try:
             selected_genes = joblib.load('selected_genes.pkl')
@@ -27,7 +25,6 @@ def load_artifacts():
     else:
         st.warning("'selected_genes.pkl' not found.")
 
-    # Load scaler
     if os.path.exists('scaler.pkl'):
         try:
             scaler = joblib.load('scaler.pkl')
@@ -36,14 +33,13 @@ def load_artifacts():
     else:
         st.warning("'scaler.pkl' not found.")
 
-    # Load sklearn model first
     if os.path.exists('sk_model.pkl'):
         try:
             model = joblib.load('sk_model.pkl')
             model_type = 'sklearn'
         except Exception:
             st.warning("Failed to load 'sk_model.pkl'.")
-    # If no sklearn model, try Keras H5
+  
     elif os.path.exists('nn_model.h5'):
         try:
             from tensorflow.keras.models import load_model
@@ -60,7 +56,6 @@ def load_artifacts():
 
 selected_genes, scaler, model, model_type = load_artifacts()
 
-# Helper function for prediction
 def predict_probability(df_log2, selected_genes, scaler, model, model_type):
     features = df_log2.loc[selected_genes].T
     data_scaled = scaler.transform(features)
@@ -77,11 +72,10 @@ def predict_probability(df_log2, selected_genes, scaler, model, model_type):
         return None
     return prob
 
-# File uploader
 uploaded_file = st.file_uploader("Choose sample TSV file", type=['tsv'])
 
 if uploaded_file:
-    # Check prerequisites
+    
     if selected_genes is None or scaler is None or model is None:
         st.error("Missing artifacts. Cannot perform prediction.")
     else:

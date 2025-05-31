@@ -1,0 +1,55 @@
+﻿Group,Accession,Title,Source name,Tissue,Ajcc stage
+colorectral_cancer,GSM1228184,primary colorectal cancer AMC_2-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228185,primary colorectal cancer AMC_3-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228186,primary colorectal cancer AMC_5-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228187,primary colorectal cancer AMC_6-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228188,primary colorectal cancer AMC_7-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228189,primary colorectal cancer AMC_8-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228190,primary colorectal cancer AMC_9-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228191,primary colorectal cancer AMC_10-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228192,primary colorectal cancer AMC_12-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228193,primary colorectal cancer AMC_13-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228194,primary colorectal cancer AMC_17-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228195,primary colorectal cancer AMC_18-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228196,primary colorectal cancer AMC_19-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228197,primary colorectal cancer AMC_20-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228198,primary colorectal cancer AMC_21-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228199,primary colorectal cancer AMC_22-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228200,primary colorectal cancer AMC_23-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+colorectral_cancer,GSM1228201,primary colorectal cancer AMC_24-1,primary colorectal cancer,primary colorectal cancer,Stage IV
+normal,GSM1228202,normal colon AMC_2-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228203,normal colon AMC_3-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228204,normal colon AMC_5-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228205,normal colon AMC_6-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228206,normal colon AMC_7-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228207,normal colon AMC_8-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228208,normal colon AMC_9-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228209,normal colon AMC_10-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228210,normal colon AMC_12-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228211,normal colon AMC_13-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228212,normal colon AMC_17-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228213,normal colon AMC_18-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228214,normal colon AMC_19-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228215,normal colon AMC_20-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228216,normal colon AMC_21-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228217,normal colon AMC_22-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228218,normal colon AMC_23-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+normal,GSM1228219,normal colon AMC_24-2,normal colon,normal-looking surrounding colonic epithelium,Stage IV
+metasize,GSM1228220,metastasized cancer AMC_2-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228221,metastasized cancer AMC_3-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228222,metastasized cancer AMC_5-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228223,metastasized cancer AMC_6-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228224,metastasized cancer AMC_7-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228225,metastasized cancer AMC_8-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228226,metastasized cancer AMC_9-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228227,metastasized cancer AMC_10-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228228,metastasized cancer AMC_12-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228229,metastasized cancer AMC_13-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228230,metastasized cancer AMC_17-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228231,metastasized cancer AMC_18-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228232,metastasized cancer AMC_19-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228233,metastasized cancer AMC_20-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228234,metastasized cancer AMC_21-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228235,metastasized cancer AMC_22-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228236,metastasized cancer AMC_23-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
+metasize,GSM1228237,metastasized cancer AMC_24-3,metastasized cancer,metastatic colorectal cancer to the liver,Stage IV
